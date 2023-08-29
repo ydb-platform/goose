@@ -1,6 +1,10 @@
 package testdb
 
-import "database/sql"
+import (
+	"database/sql"
+
+	"github.com/ydb-platform/ydb-go-sdk/v3"
+)
 
 // NewClickHouse starts a ClickHouse docker container. Returns db connection and a docker cleanup function.
 func NewClickHouse(options ...OptionsFunc) (db *sql.DB, cleanup func(), err error) {
@@ -20,4 +24,9 @@ func NewMariaDB(options ...OptionsFunc) (db *sql.DB, cleanup func(), err error) 
 // NewVertica starts a Vertica docker container. Returns a db connection and a docker cleanup function.
 func NewVertica(options ...OptionsFunc) (db *sql.DB, cleanup func(), err error) {
 	return newVertica(options...)
+}
+
+// NewYdbWithNative starts a YDB docker container. Returns db connection and a docker cleanup function.
+func NewYdbWithNative(options ...OptionsFunc) (db *sql.DB, ExtraNativeDriver *ydb.Driver, cleanup func(), err error) {
+	return newYdbWIthNative(options...)
 }

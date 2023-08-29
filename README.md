@@ -1,7 +1,7 @@
 # goose [![Goose CI](https://github.com/pressly/goose/actions/workflows/ci.yaml/badge.svg)](https://github.com/pressly/goose/actions/workflows/ci.yaml) [![Go Reference](https://pkg.go.dev/badge/github.com/pressly/goose/v3.svg)](https://pkg.go.dev/github.com/pressly/goose/v3)
 
 <p align="center">
-  <img src="assets/goose_logo.png" width="125"">
+  <img src="assets/goose_logo.png" width="125">
 </p>
 
 Goose is a database migration tool. Manage your database schema by creating incremental SQL changes or Go functions.
@@ -30,7 +30,7 @@ Goose supports [embedding SQL migrations](#embedded-sql-migrations), which means
     thus no driver `panic()` conflict within your codebase!
   - goose pkg doesn't have any vendor dependencies anymore
 - We use timestamped migrations by default but recommend a hybrid approach of using timestamps in the development process and sequential versions in production.
-- Supports missing (out-of-order) migrations with the `-allow-missing` flag, or if using as a library supply the functional option `goose.WithAllowMissing()` to Up, UpTo or UpByOne.
+- Supports missing (out-of-order) migrations with the `-allow-missing` flag, or if using as a library supply the functional option `goose.WithAllowMissing()` to Up, UpTo or UpByOne. YDB Doesn't support this feature. 
 - Supports applying ad-hoc migrations without tracking them in the schema table. Useful for seeding a database after migrations have been applied. Use `-no-versioning` flag or the functional option `goose.WithNoVersioning()`.
 
 # Install
@@ -41,7 +41,7 @@ This will install the `goose` binary to your `$GOPATH/bin` directory.
 
 For a lite version of the binary without DB connection dependent commands, use the exclusive build tags:
 
-    $ go build -tags='no_postgres no_mysql no_sqlite3' -o goose ./cmd/goose
+    $ go build -tags='no_postgres no_mysql no_sqlite3 no_ydb' -o goose ./cmd/goose
 
 For macOS users `goose` is available as a [Homebrew Formulae](https://formulae.brew.sh/formula/goose#default):
 
@@ -63,6 +63,7 @@ Drivers:
     tidb
     clickhouse
     vertica
+    ydb
 
 Examples:
     goose sqlite3 ./foo.db status
@@ -78,6 +79,7 @@ Examples:
     goose mssql "sqlserver://user:password@dbname:1433?database=master" status
     goose clickhouse "tcp://127.0.0.1:9000" status
     goose vertica "vertica://user:password@localhost:5433/dbname?connection_load_balance=1" status
+    goose ydb "grpc://localhost:2136/local?query_mode=scripting&go_fake_tx=scripting&go_query_bind=declare,numeric" status
 
 Options:
 
@@ -123,7 +125,7 @@ Create a new SQL migration.
     $ goose create add_some_column sql
     $ Created new file: 20170506082420_add_some_column.sql
 
-Edit the newly created file to define the behavior of your migration.
+Edit the newly created file to define the behavior of your migration.  
 
 You can also create a Go migration, if you then invoke it with [your own goose binary](#go-migrations):
 
