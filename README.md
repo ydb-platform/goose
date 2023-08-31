@@ -30,7 +30,7 @@ Goose supports [embedding SQL migrations](#embedded-sql-migrations), which means
     thus no driver `panic()` conflict within your codebase!
   - goose pkg doesn't have any vendor dependencies anymore
 - We use timestamped migrations by default but recommend a hybrid approach of using timestamps in the development process and sequential versions in production.
-- Supports missing (out-of-order) migrations with the `-allow-missing` flag, or if using as a library supply the functional option `goose.WithAllowMissing()` to Up, UpTo or UpByOne. YDB Doesn't support this feature. 
+- Supports missing (out-of-order) migrations with the `-allow-missing` flag, or if using as a library supply the functional option `goose.WithAllowMissing()` to Up, UpTo or UpByOne.
 - Supports applying ad-hoc migrations without tracking them in the schema table. Useful for seeding a database after migrations have been applied. Use `-no-versioning` flag or the functional option `goose.WithNoVersioning()`.
 
 # Install
@@ -79,7 +79,7 @@ Examples:
     goose mssql "sqlserver://user:password@dbname:1433?database=master" status
     goose clickhouse "tcp://127.0.0.1:9000" status
     goose vertica "vertica://user:password@localhost:5433/dbname?connection_load_balance=1" status
-    goose ydb "grpc://localhost:2136/local?query_mode=scripting&go_fake_tx=scripting&go_query_bind=declare,numeric" status
+    goose ydb "grpc://localhost:2136/local?go_query_mode=scripting&go_fake_tx=scripting&go_query_bind=declare,numeric" status
 
 Options:
 
@@ -125,7 +125,7 @@ Create a new SQL migration.
     $ goose create add_some_column sql
     $ Created new file: 20170506082420_add_some_column.sql
 
-Edit the newly created file to define the behavior of your migration.  
+Edit the newly created file to define the behavior of your migration.
 
 You can also create a Go migration, if you then invoke it with [your own goose binary](#go-migrations):
 
