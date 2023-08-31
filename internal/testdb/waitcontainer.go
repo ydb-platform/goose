@@ -8,8 +8,8 @@ import (
 	"github.com/ory/dockertest/v3/docker/types"
 )
 
-// waitInit waits until docker container with specified id health status is healthy
-func waitInit(ctx context.Context, pool *dockertest.Pool, id string) error {
+// waitContainerIsHealthy waits until docker container with specified id health status is healthy
+func waitContainerIsHealthy(ctx context.Context, pool *dockertest.Pool, id string) error {
 	var (
 		initDoneCh = make(chan struct{})
 		initErr    error

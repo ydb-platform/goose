@@ -94,7 +94,7 @@ func newYdb(opts ...OptionsFunc) (*sql.DB, func(), error) {
 	if err := pool.Retry(func() (err error) {
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 		defer cancel()
-		if err := waitInit(ctx, pool, container.Container.ID); err != nil {
+		if err := waitContainerIsHealthy(ctx, pool, container.Container.ID); err != nil {
 			return err
 		}
 
