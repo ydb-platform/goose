@@ -16,7 +16,6 @@ require (
 	github.com/sethvargo/go-retry v0.3.0
 	github.com/stretchr/testify v1.11.1
 	github.com/tursodatabase/libsql-client-go v0.0.0-20251219100830-236aa1ff8acc
-	github.com/vertica/vertica-sql-go v1.3.5
 	github.com/vertica/vertica-sql-go v1.3.6
 	github.com/ydb-platform/ydb-go-sdk/v3 v3.135.0
 	github.com/ziutek/mymysql v1.5.4
